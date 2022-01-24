@@ -8,9 +8,11 @@ connectToMongo();
 const app = express();
 const port = 3000;
 
-app.get("/", (req, res) => {
-  res.send("hello World");
-});
+app.use(express.json());
+// available routes
+
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/notes", require("./routes/notes"));
 
 app.listen(port, () => {
   console.log(`express server is running on the port http://localhost:${port}`);
