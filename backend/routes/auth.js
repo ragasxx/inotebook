@@ -4,6 +4,7 @@ const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const fetchuser = require("../middleware/fetchuser");
 
 const JWT_SECRET = "hellofuncti@n";
 
@@ -109,5 +110,19 @@ router.post(
     }
   }
 );
+
+// route for getting the details of the user
+
+// to get the details we use middlewares and fetching data from fetchuser middleware.....saving the user coming from fetchuser(as m storing user data in req.user)
+router.post("/getuser", fetchuser, async (req, res) => {
+  try {
+    userId = req.user.id;
+    const user = await User.findById(userId).select("-password");
+    res.json(user);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send("Internal server error");
+  }
+});
 
 module.exports = router;
