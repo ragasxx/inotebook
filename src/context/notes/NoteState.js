@@ -20,7 +20,7 @@ const NoteState = (props) => {
       },
     });
     const json = await response.json();
-    console.log(json);
+
     setNotes(json);
   };
   // add a note
@@ -65,7 +65,6 @@ const NoteState = (props) => {
     });
 
     const json = await response.json();
-    console.log(json);
 
     console.log("deleting the id  " + id);
     const newNote = notes.filter((note) => {
@@ -90,6 +89,8 @@ const NoteState = (props) => {
         body: JSON.stringify({ title, description, tag }),
       }
     );
+    const json = response.json();
+    console.log(json);
 
     // logic to edit a note in client site
 
@@ -100,7 +101,9 @@ const NoteState = (props) => {
         element.description = description;
         element.tag = tag;
       }
+      break;
     }
+    setNotes(notes);
   };
 
   return (
